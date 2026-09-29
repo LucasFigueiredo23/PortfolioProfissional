@@ -125,21 +125,21 @@
           <svg class="ruas-fundo ruas-destaque" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice"><use href="#ruas-simbolo"/></svg>
 
           <div class="destaque-cabeca">
-            <p class="status andamento"><span class="pulso" aria-hidden="true"></span>Em andamento</p>
+            <p class="status andamento"><span class="pulso" aria-hidden="true"></span>Protótipo funcional</p>
             <h3>Rotas de coleta de lixo em Castanhal</h3>
-            <p class="resumo">Rotas dinâmicas para os caminhões de coleta da cidade, calculadas a partir de dados geográficos e do volume histórico de lixo de cada região.</p>
+            <p class="resumo">Otimização das rotas dos caminhões de coleta de Castanhal, usando os bairros e a frequência oficiais da prefeitura e as ruas reais da cidade para reduzir a distância percorrida e o consumo de combustível.</p>
           </div>
 
           <dl class="caso">
-            <div><dt>Objetivo</dt><dd>Reduzir o combustível gasto pelos caminhões de coleta.</dd></div>
-            <div><dt>Abordagem</dt><dd>Otimização de rotas com dados geográficos e histórico de volume por região.</dd></div>
-            <div><dt>Onde vai ser apresentado</dt><dd>14ª Semana Acadêmica do Campus XX da UEPA, em novembro de 2026.</dd></div>
-            <div><dt>Stack</dt><dd>[PREENCHER]</dd></div>
-            <div><dt>Parte mais difícil</dt><dd>[PREENCHER]</dd></div>
-            <div><dt>O que estou aprendendo</dt><dd>[PREENCHER]</dd></div>
+            <div><dt>Problema</dt><dd>Castanhal ainda tem lixão a céu aberto, e a coleta roda sem rotas otimizadas. Em setembro de 2026 a secretaria municipal nos passou a lista oficial de bairros atendidos, nas zonas urbana e rural, e a frequência de coleta de cada um.</dd></div>
+            <div><dt>Onde está hoje</dt><dd>O protótipo já calcula as rotas da semana com os dados reais e gera um mapa interativo. Ainda faltam a localização da garagem, a quilometragem atual de cada rota (para medir a economia real), o número de caminhões e o consumo deles.</dd></div>
+            <div><dt>Stack</dt><dd>Python, folium (mapa com Leaflet), OpenStreetMap: Nominatim para localizar os bairros e OSRM para distâncias e traçado pelas ruas. Vizinho Mais Próximo para montar as rotas e Haversine como plano B sem internet.</dd></div>
+            <div><dt>Parte mais difícil</dt><dd>Sair da simulação para os dados reais. A prefeitura não tem os pontos de coleta georreferenciados, então localizei cada bairro no OpenStreetMap tratando nomes diferentes, bairros não encontrados e resultados errados. Outro desafio é comparar a rota atual com a otimizada de forma justa sem ter o percurso que o caminhão faz hoje.</dd></div>
+            <div><dt>O que estou aprendendo</dt><dd>Algoritmos de roteamento (Caixeiro Viajante e heurísticas gulosas), distâncias em coordenadas geográficas, APIs públicas e seus limites de uso, validação de dados e como apresentar resultados com honestidade, separando dado real de premissa.</dd></div>
+            <div><dt>Equipe e apresentação</dt><dd>Em dupla com Kauan Kawasaki, com orientação de um professor. Será apresentado na 14ª Semana Acadêmica do Campus XX da UEPA, em novembro de 2026.</dd></div>
           </dl>
 
-          <a class="link-forte" href="#">Repositório [PREENCHER]</a>
+          <p class="link-nota">Código privado até a apresentação, em novembro de 2026.</p>
         </article>
 
         <!-- Demais projetos: cada linha abre com mais detalhes -->
@@ -150,36 +150,38 @@
 
           <details class="linha">
             <summary>
-              <span class="linha-nome">Letivo <small>Horários escolares com grade mensal colorida</small></span>
-              <span class="linha-stack">PHP, Twig</span>
+              <span class="linha-nome">Letivo <small>Gerenciamento de horários escolares, com front-end acessível</small></span>
+              <span class="linha-stack">PHP, Twig, JavaScript</span>
               <span class="status andamento"><span class="pulso" aria-hidden="true"></span>Em andamento</span>
               <span class="seta" aria-hidden="true"></span>
             </summary>
             <div class="linha-corpo">
               <dl class="caso">
-                <div><dt>Problema</dt><dd>Centralizar os horários de aula da minha turma. A versão 1.0 vai ser usada pela própria turma da faculdade.</dd></div>
-                <div><dt>O que fiz</dt><dd>Toda a programação, numa equipe de três. Comecei em Python com Flask e reconstruí em PHP com Twig, parte por parte. O front-end foi pensado para acessibilidade, e a grade mensal mostra pela cor se cada dia tem aula.</dd></div>
-                <div><dt>Parte mais difícil</dt><dd>[PREENCHER]</dd></div>
-                <div><dt>O que aprendi</dt><dd>[PREENCHER]</dd></div>
+                <div><dt>Problema</dt><dd>Centralizar os horários de aula da minha turma. A versão 1.0 vai ser usada pela própria turma da faculdade, e o projeto também será apresentado na disciplina de HTML/JavaScript.</dd></div>
+                <div><dt>O que fiz</dt><dd>Toda a programação, numa equipe de três. A primeira versão era em Python com Flask e Jinja2; reconstruí do zero em PHP com Twig. O front-end foi pensado para acessibilidade desde o começo.</dd></div>
+                <div><dt>Próximos passos</dt><dd>Personalizar os dias com aula de cada turma e uma grade mensal em quadradinhos coloridos: verde para dia com aula, vermelho para dia sem aula.</dd></div>
+                <div><dt>Parte mais difícil</dt><dd>Adaptar os templates às diferenças entre Jinja2 e Twig. O modo <code>strict_variables</code> do Twig passou a acusar variáveis indefinidas que o Jinja2 deixava passar em silêncio.</dd></div>
+                <div><dt>O que aprendi</dt><dd>Organizar um site em templates e componentes reaproveitáveis (base, cabeçalho, partials), pensar em acessibilidade desde o início e versionar com Git em commits pequenos.</dd></div>
               </dl>
-              <a class="link-forte" href="#">Ver código</a>
+              <p class="link-nota">Em desenvolvimento: código e site no ar em breve.</p>
             </div>
           </details>
 
           <details class="linha">
             <summary>
-              <span class="linha-nome">Loja de iPhones <small>[PREENCHER: descrição curta]</small></span>
-              <span class="linha-stack">[PREENCHER]</span>
-              <span class="status concluido">Concluído</span>
+              <span class="linha-nome">Pantoja Imports <small>Vitrine de iPhones que leva o cliente direto ao WhatsApp da loja</small></span>
+              <span class="linha-stack">HTML, CSS, JavaScript</span>
+              <span class="status andamento"><span class="pulso" aria-hidden="true"></span>Em andamento</span>
               <span class="seta" aria-hidden="true"></span>
             </summary>
             <div class="linha-corpo">
               <dl class="caso">
-                <div><dt>O que fiz</dt><dd>[PREENCHER]</dd></div>
-                <div><dt>Parte mais difícil</dt><dd>[PREENCHER]</dd></div>
-                <div><dt>O que aprendi</dt><dd>[PREENCHER]</dd></div>
+                <div><dt>O que fiz</dt><dd>Sozinho, um site vitrine para uma loja de iPhones, sem login nem compra. Catálogo filtrável (novos, seminovos e acessórios), detalhes de cada produto e mensagem de WhatsApp já pronta com o item escolhido. Os produtos ficam numa lista no JavaScript, fácil de editar sem mexer no layout.</dd></div>
+                <div><dt>Cuidados</dt><dd>Layout pensado primeiro para o celular, modo claro e escuro, e acessibilidade: navegação por teclado, contraste e respeito a quem prefere menos movimento.</dd></div>
+                <div><dt>Parte mais difícil</dt><dd>Aprender CSS a fundo para deixar o site bonito, e não só funcionando.</dd></div>
+                <div><dt>O que aprendi</dt><dd>Fazer uma página que seja bonita, prática e chame a atenção de quem entra, sem nenhum framework.</dd></div>
               </dl>
-              <a class="link-forte" href="#">Ver site</a>
+              <a class="link-forte" href="https://pantoja-imports.lucasfigueiredo-bsilva.workers.dev">Ver site</a>
             </div>
           </details>
         </div>
@@ -239,8 +241,8 @@
         <p class="contato-texto">Tem uma vaga de estágio, trabalho ou quer conversar sobre algum projeto? Me escreve.</p>
         <a class="contato-email" href="mailto:lucasfigueiredo.bsilva@gmail.com">lucasfigueiredo.bsilva@gmail.com</a>
         <ul class="contato-links">
-          <li><a href="#">GitHub</a></li>
-          <li><a href="#">LinkedIn</a></li>
+          <li><a href="https://github.com/LucasFigueiredo23">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/lucas-figueiredo-693731227/">LinkedIn</a></li>
         </ul>
       </div>
     </section>

@@ -294,6 +294,9 @@ a:hover { background-size: 100% 2px; }
 .caso dd { margin: 0; color: var(--rio); }
 
 .link-forte { display: inline-block; margin-top: 1.75rem; font-weight: 600; padding: 0.3rem 0; }
+/* Aviso no lugar de um link que ainda não existe (código privado, site em breve) */
+.link-nota { margin: 1.75rem 0 0; font-size: 0.9rem; color: var(--rio); }
+.link-forte + .link-nota { margin-top: 0.5rem; }
 
 /* =========================================================
    7. PROJETOS
