@@ -1,43 +1,50 @@
 /* =========================================================
    1. TOKENS: cores, fontes e espaçamentos
+   O tema ESCURO é o padrão. O claro fica em :root[data-theme="light"].
    Mude aqui e o site inteiro acompanha.
    ========================================================= */
 :root {
-  --varzea: #EEF0EA;        /* fundo */
-  --superficie: #F8F9F6;    /* blocos em destaque */
-  --igarape: #122A30;       /* texto principal */
-  --rio: #4A6168;           /* texto secundário */
-  --margem: #CBD3CE;        /* linhas */
-  --grade: #DEE3DF;         /* grade de ruas do mapa */
-  --acai: #4B1F5C;          /* destaque principal */
-  --acai-suave: #E9E1EC;
-  --tucupi-texto: #875800;  /* status "em andamento" (texto) */
-  --tucupi-linha: #B57A0C;  /* rota otimizada (gráfico) */
+  color-scheme: dark;
+  --varzea: #0B161A;        /* fundo: rio à noite */
+  --superficie: #122128;    /* blocos em destaque */
+  --igarape: #E6EDEA;       /* texto principal */
+  --rio: #9FB2B4;           /* texto secundário */
+  --margem: #243840;        /* linhas */
+  --grade: #16262C;         /* grade de ruas do mapa */
+  --traco: #1C3038;         /* ruas do fundo decorativo */
+  --acai: #CDA6E0;          /* destaque principal */
+  --acai-suave: #1E1927;
+  --tucupi-texto: #EBB24E;  /* status "em andamento" (texto) */
+  --tucupi-linha: #EBB24E;  /* rota otimizada (gráfico) */
+  --brilho-rota: drop-shadow(0 0 6px rgba(235, 178, 78, 0.55));
+  --sombra-mapa: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+  --ruido-opacidade: 0.06;
+  --ruido-mistura: overlay;
 
+  --fonte-titulo: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --fonte: "Schibsted Grotesk", "Segoe UI", system-ui, sans-serif;
   --fonte-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
 
-  --raio: 18px;
+  --raio: 20px;
   --largura: 1180px;
+  --altura-menu: 68px;
+  --curva-suave: cubic-bezier(0.22, 1, 0.36, 1);   /* desacelera no final */
 
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* Modo escuro automático (segue o sistema) */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --varzea: #0E1B1F; --superficie: #15262B; --igarape: #E4EBE8; --rio: #9EB1B3;
-    --margem: #2A3D42; --grade: #1B2C31; --acai: #C9A3DC; --acai-suave: #251D2B;
-    --tucupi-texto: #E8B04A; --tucupi-linha: #E8B04A;
-  }
-}
-/* Modo escuro forçado (usado por alguns visualizadores) */
-:root[data-theme="dark"] {
-  --varzea: #0E1B1F; --superficie: #15262B; --igarape: #E4EBE8; --rio: #9EB1B3;
-  --margem: #2A3D42; --grade: #1B2C31; --acai: #C9A3DC; --acai-suave: #251D2B;
-  --tucupi-texto: #E8B04A; --tucupi-linha: #E8B04A;
+/* Tema claro (ativado pelo botão do menu) */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --varzea: #EEF0EA; --superficie: #F8F9F6; --igarape: #122A30; --rio: #4A6168;
+  --margem: #CBD3CE; --grade: #DEE3DF; --traco: #D6DDD8; --acai: #4B1F5C; --acai-suave: #E9E1EC;
+  --tucupi-texto: #875800; --tucupi-linha: #B57A0C;
+  --brilho-rota: none;
+  --sombra-mapa: 0 24px 48px -28px rgba(18, 42, 48, 0.35);
+  --ruido-opacidade: 0.05;
+  --ruido-mistura: multiply;
 }
 
 /* =========================================================
@@ -45,7 +52,10 @@
    ========================================================= */
 *, *::before, *::after { box-sizing: inherit; }
 
-html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + var(--altura-menu) + 12px);
+}
 
 body {
   margin: 0;
@@ -57,36 +67,105 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 { margin: 0; line-height: 1.05; font-weight: 800; letter-spacing: -0.025em; }
-p { margin: 0; }
+/* Textura de papel bem leve por cima de tudo: dá o ar de "feito à mão" */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50;
+  opacity: var(--ruido-opacidade); mix-blend-mode: var(--ruido-mistura);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection { background: var(--acai); color: var(--varzea); }
+
+h1, h2, h3 {
+  margin: 0; font-family: var(--fonte-titulo); font-weight: 800;
+  line-height: 1; letter-spacing: -0.03em; text-wrap: balance;
+}
+p { margin: 0; text-wrap: pretty; }
 img, svg { max-width: 100%; }
 code { font-family: var(--fonte-mono); font-size: 0.92em; }
 
-a { color: var(--acai); text-underline-offset: 3px; text-decoration-thickness: 1px; }
-a:hover { text-decoration-thickness: 2px; }
+/* Links: o sublinhado "cresce" da esquerda para a direita no hover */
+a {
+  color: var(--acai); text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 100% 1px;
+  transition: background-size 0.35s var(--curva-suave);
+}
+a:hover { background-size: 100% 2px; }
 
 :focus-visible { outline: 3px solid var(--acai); outline-offset: 3px; border-radius: 4px; }
 
 .wrap { max-width: var(--largura); margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
 
-/* Link "Pular para o conteúdo": só aparece ao receber foco */
 .pular {
-  position: absolute; left: 1rem; top: -4rem; z-index: 10;
-  background: var(--acai); color: var(--varzea); padding: 0.75rem 1rem; border-radius: 8px;
+  position: absolute; left: 1rem; top: -4rem; z-index: 60; background: var(--acai);
+  color: var(--varzea); padding: 0.75rem 1rem; border-radius: 8px;
 }
 .pular:focus { top: 1rem; }
 
+/* Traçado de ruas decorativo (reaproveitado em vários lugares).
+   A máscara faz as ruas sumirem suavemente nas bordas. */
+.ruas-fundo {
+  position: absolute; pointer-events: none;
+  -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent);
+          mask-image: radial-gradient(closest-side, #000 30%, transparent);
+}
+.ruas-fundo .rua { stroke: var(--traco); fill: none; }
+.ruas-fundo .ponto-fundo { fill: var(--tucupi-linha); opacity: 0.35; }
+
+/* Ponto que "pulsa": sinal de coisa acontecendo agora */
+.pulso {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--tucupi-linha); margin-right: 0.5rem; vertical-align: 0.1em;
+  box-shadow: 0 0 0 0 var(--tucupi-linha); animation: pulsar 2.4s ease-out infinite;
+}
+@keyframes pulsar {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--tucupi-linha) 55%, transparent); }
+  70%  { box-shadow: 0 0 0 9px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
 /* =========================================================
-   3. MENU
+   3. MENU (grudado no topo, com fundo translúcido)
    ========================================================= */
 .topo {
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 1rem; flex-wrap: wrap; padding-top: 1.5rem; padding-bottom: 1.5rem;
+  position: sticky; top: 0; z-index: 40;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: color-mix(in srgb, var(--varzea) 82%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
 }
-.marca { font-weight: 800; color: var(--igarape); text-decoration: none; font-size: 1.1rem; }
+.topo.rolou { border-bottom-color: var(--margem); }
+.topo-interno {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; flex-wrap: wrap; min-height: var(--altura-menu);
+}
+.marca {
+  font-family: var(--fonte-titulo); font-weight: 800; font-size: 1.15rem;
+  color: var(--igarape); background: none; display: inline-flex; align-items: center; gap: 0.6rem;
+}
+.marca-ponto { width: 12px; height: 12px; border-radius: 3px; background: var(--acai); }
+
+.topo nav { display: flex; align-items: center; gap: clamp(1rem, 3vw, 2rem); }
 .topo ul { list-style: none; display: flex; gap: clamp(1rem, 3vw, 2rem); margin: 0; padding: 0; flex-wrap: wrap; }
-.topo ul a { color: var(--rio); text-decoration: none; font-weight: 500; padding: 0.5rem 0; }
-.topo ul a:hover { color: var(--igarape); }
+.topo ul a {
+  color: var(--rio); font-weight: 500; padding: 0.6rem 0; display: inline-block;
+  background-size: 0 2px;  /* sublinhado escondido até o hover ou a seção ativa */
+}
+.topo ul a:hover, .topo ul a.ativo { color: var(--igarape); background-size: 100% 2px; }
+.topo ul a.ativo { color: var(--acai); }
+
+/* Botão de tema: mostra o sol no escuro e a lua no claro */
+.tema {
+  width: 44px; height: 44px; display: grid; place-items: center; flex-shrink: 0;
+  border-radius: 50%; border: 1px solid var(--margem); background: transparent;
+  color: var(--igarape); cursor: pointer; transition: border-color 0.2s, transform 0.4s var(--curva-suave);
+}
+.tema:hover { border-color: var(--acai); transform: rotate(-20deg); }
+.tema svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icone-lua { display: none; }
+:root[data-theme="light"] .icone-sol { display: none; }
+:root[data-theme="light"] .icone-lua { display: block; }
 
 /* =========================================================
    4. BOTÕES
@@ -94,172 +173,251 @@ a:hover { text-decoration-thickness: 2px; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: 48px; padding: 0 1.5rem; border-radius: 999px;
-  font: inherit; font-weight: 600; text-decoration: none; cursor: pointer;
-  border: 2px solid var(--acai); transition: background-color 0.15s, color 0.15s;
+  font: inherit; font-weight: 600; cursor: pointer; background-image: none;
+  border: 2px solid var(--acai); position: relative; overflow: hidden; isolation: isolate;
+  transition: color 0.3s var(--curva-suave);
 }
-.btn-cheio { background: var(--acai); color: var(--varzea); }
-.btn-cheio:hover { background: transparent; color: var(--acai); }
-.btn-vazio { background: transparent; color: var(--acai); }
-.btn-vazio:hover { background: var(--acai); color: var(--varzea); }
+/* O preenchimento sobe de baixo para cima no hover */
+.btn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--acai);
+  transform: translateY(101%); transition: transform 0.35s var(--curva-suave);
+}
+.btn:hover::before { transform: translateY(0); }
+.btn:active { transform: translateY(1px); }
+
+.btn-vazio { color: var(--acai); background-color: transparent; }
+.btn-vazio:hover { color: var(--varzea); }
+
+.btn-cheio { color: var(--varzea); background-color: var(--acai); }
+.btn-cheio::before { background: var(--varzea); }
+.btn-cheio:hover { color: var(--acai); }
+
 .btn-pequeno { min-height: 44px; padding: 0 1.1rem; font-size: 0.95rem; }
 
 /* =========================================================
    5. HERO
    ========================================================= */
+.hero-fundo { position: relative; overflow: hidden; }
+.ruas-hero { top: -10%; right: -15%; width: 85%; height: 120%; }
+
 .hero {
-  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   gap: clamp(2rem, 5vw, 4.5rem); align-items: center;
   padding-top: clamp(2rem, 6vw, 5rem); padding-bottom: clamp(4rem, 8vw, 7rem);
 }
-.hero h1 { font-size: clamp(3rem, 7.5vw, 6rem); }
-.hero-sub { font-size: clamp(1.15rem, 1.8vw, 1.3rem); color: var(--rio); max-width: 32ch; margin-top: 1.5rem; }
+.hero-local { font-family: var(--fonte-mono); font-size: 0.9rem; color: var(--rio); margin-bottom: 1rem; }
+.hero h1 { font-size: clamp(3.4rem, 8.5vw, 6.75rem); line-height: 0.92; letter-spacing: -0.045em; }
+.hero-sub { font-size: clamp(1.15rem, 1.8vw, 1.3rem); color: var(--rio); max-width: 32ch; margin-top: 1.75rem; }
 .hero-busca { font-weight: 600; margin: 1.25rem 0 2rem; }
 .acoes { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+/* Entrada da página: cada peça aparece um pouco depois da anterior */
+.entrada { animation: entrar 0.9s var(--curva-suave) both; animation-delay: calc(var(--atraso, 0) * 110ms); }
+@keyframes entrar { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 /* ---------- Mapa de rotas ---------- */
 .mapa { margin: 0; }
 .mapa-quadro {
-  background: var(--superficie); border: 1px solid var(--margem);
+  position: relative; background: var(--superficie); border: 1px solid var(--margem);
   border-radius: var(--raio); overflow: hidden;
+  box-shadow: 0 1px 0 var(--margem), var(--sombra-mapa);
 }
 .mapa-quadro svg { display: block; width: 100%; height: auto; }
 .grade { stroke: var(--grade); stroke-width: 1; }
 
-.rota-inicial {
-  fill: none; stroke: var(--rio); stroke-width: 1.5;
-  stroke-dasharray: 3 6; opacity: 0.55;
-}
-.rota-otima {
-  fill: none; stroke: var(--tucupi-linha); stroke-width: 3.5;
-  stroke-linejoin: round; stroke-linecap: round;
-}
-.ponto { fill: var(--igarape); }
+.rota-inicial { fill: none; stroke: var(--rio); stroke-width: 1.5; stroke-dasharray: 3 6; opacity: 0.5; }
+.rota-otima { fill: none; stroke: var(--tucupi-linha); stroke-width: 3.5; stroke-linejoin: round; stroke-linecap: round; filter: var(--brilho-rota); }
+
+.ponto { fill: var(--superficie); stroke: var(--igarape); stroke-width: 2; transition: fill 0.2s, r 0.2s; }
+.ponto.visitado { fill: var(--tucupi-linha); stroke: var(--tucupi-linha); }
 .deposito { fill: var(--acai); }
 .rotulo { fill: var(--rio); font-family: var(--fonte-mono); font-size: 13px; }
+.caminhao { fill: var(--acai); stroke: var(--superficie); stroke-width: 3; }
+.caminhao-rastro { fill: var(--acai); opacity: 0.18; }
 
-.mapa-controles {
-  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;
+/* Legenda na base do quadro do mapa */
+.legenda {
+  list-style: none; margin: 0; padding: 0.6rem 0.9rem; display: flex; gap: 1.1rem; flex-wrap: wrap;
+  font-family: var(--fonte-mono); font-size: 0.75rem; color: var(--rio);
+  border-top: 1px solid var(--margem);
 }
+.legenda li { display: flex; align-items: center; gap: 0.4rem; }
+.leg { display: inline-block; width: 18px; height: 0; }
+.leg-inicial { border-top: 2px dashed var(--rio); }
+.leg-otima { border-top: 3px solid var(--tucupi-linha); }
+.leg-garagem { width: 10px; height: 10px; border-radius: 2px; background: var(--acai); }
+
+.mapa-controles { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.1rem; }
 .mapa-controles label { font-weight: 500; }
-.mapa-controles output { font-family: var(--fonte-mono); }
+.mapa-controles output {
+  font-family: var(--fonte-mono); display: inline-block; min-width: 2.2ch; margin-left: 0.3rem;
+  padding: 0.05rem 0.4rem; border-radius: 6px; background: var(--acai-suave); color: var(--acai); text-align: center;
+}
 .mapa-controles input[type="range"] { flex: 1 1 140px; accent-color: var(--acai); min-height: 44px; }
 
 .mapa-leitura {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
-  margin: 1.25rem 0 0; padding: 1rem 0; border-top: 1px solid var(--margem); border-bottom: 1px solid var(--margem);
+  margin: 1.1rem 0 0; padding: 1rem 0; border-top: 1px solid var(--margem); border-bottom: 1px solid var(--margem);
 }
+.mapa-leitura div + div { border-left: 1px solid var(--margem); padding-left: 1rem; }
 .mapa-leitura dt { font-size: 0.85rem; color: var(--rio); }
-.mapa-leitura dd { margin: 0.2rem 0 0; font-family: var(--fonte-mono); font-size: 1.15rem; font-weight: 500; }
+.mapa-leitura dd {
+  margin: 0.2rem 0 0; font-family: var(--fonte-mono); font-size: 1.2rem; font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
 #d-economia { color: var(--tucupi-texto); }
+.mapa-leitura dd.atualizou { animation: piscar 0.6s var(--curva-suave); }
+@keyframes piscar { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 
 .mapa figcaption { margin-top: 1rem; font-size: 0.95rem; color: var(--rio); max-width: 60ch; }
 
 /* =========================================================
    6. SEÇÕES (estrutura comum)
    ========================================================= */
-.secao { padding: clamp(4rem, 8vw, 6.5rem) 0; border-top: 1px solid var(--margem); }
-.secao h2 { font-size: clamp(2.2rem, 5vw, 3.25rem); margin-bottom: clamp(2rem, 4vw, 3rem); }
+.secao { position: relative; padding: clamp(4rem, 8vw, 6.5rem) 0; border-top: 1px solid var(--margem); }
+.secao h2 { font-size: clamp(2.4rem, 5.5vw, 3.75rem); margin-bottom: clamp(2rem, 4vw, 3rem); }
 
-/* Status: "em andamento" / "concluído" */
+/* Elementos que aparecem suavemente ao rolar (a classe é colocada pelo script.js) */
+.revelar { opacity: 0; transform: translateY(18px); transition: opacity 0.8s var(--curva-suave), transform 0.8s var(--curva-suave); }
+.revelar.visivel { opacity: 1; transform: none; }
+
 .status {
-  display: inline-block; font-size: 0.85rem; font-weight: 600; white-space: nowrap;
-  padding: 0.15rem 0.7rem; border-radius: 999px; border: 1.5px solid currentColor;
+  display: inline-flex; align-items: center; font-size: 0.85rem; font-weight: 600; white-space: nowrap;
+  padding: 0.2rem 0.75rem; border-radius: 999px; border: 1.5px solid currentColor;
 }
+.status .pulso { width: 7px; height: 7px; margin-right: 0.45rem; vertical-align: 0; }
 .status.andamento { color: var(--tucupi-texto); }
 .status.concluido { color: var(--rio); }
 
-/* Lista de definições usada nos estudos de caso */
 .caso { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem 2.5rem; margin: 0; }
 .caso dt { font-weight: 600; margin-bottom: 0.3rem; }
 .caso dd { margin: 0; color: var(--rio); }
 
-.link-forte { display: inline-block; margin-top: 1.75rem; font-weight: 600; padding: 0.4rem 0; }
+.link-forte { display: inline-block; margin-top: 1.75rem; font-weight: 600; padding: 0.3rem 0; }
 
 /* =========================================================
    7. PROJETOS
    ========================================================= */
 .destaque {
+  position: relative; overflow: hidden; isolation: isolate;
   background: var(--acai-suave); border-radius: var(--raio);
   padding: clamp(1.75rem, 4vw, 3rem); margin-bottom: clamp(3rem, 6vw, 4.5rem);
 }
+.ruas-destaque { z-index: -1; top: -40%; right: -25%; width: 75%; height: 180%; opacity: 0.8; }
 .destaque-cabeca { max-width: 62ch; margin-bottom: 2.25rem; }
-.destaque h3 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); margin: 1rem 0 1rem; }
+.destaque h3 { font-size: clamp(2rem, 4vw, 3rem); margin: 1rem 0 1rem; }
 .destaque .resumo { font-size: 1.15rem; }
 .destaque .caso dd { color: var(--igarape); }
 
-/* Índice de projetos: colunas iguais no cabeçalho e nas linhas */
+/* Índice de projetos: mesmas colunas no cabeçalho e nas linhas */
 .indice-cabeca, .linha summary {
-  display: grid; grid-template-columns: minmax(0, 1fr) 12rem 9rem 1.5rem;
-  gap: 1.5rem; align-items: center;
+  display: grid; grid-template-columns: minmax(0, 1fr) 12rem 9.5rem 1.5rem;
+  gap: 1.5rem; align-items: center; padding-inline: 1rem;
 }
 .indice-cabeca { font-size: 0.85rem; color: var(--rio); padding-bottom: 0.75rem; }
 
 .linha { border-top: 1px solid var(--margem); }
 .linha:last-child { border-bottom: 1px solid var(--margem); }
-.linha summary { list-style: none; cursor: pointer; padding: 1.4rem 0; }
+.linha summary {
+  list-style: none; cursor: pointer; padding-block: 1.5rem;
+  position: relative; isolation: isolate; border-radius: 12px;
+}
 .linha summary::-webkit-details-marker { display: none; }
-.linha summary:hover .linha-nome { color: var(--acai); }
 
-.linha-nome { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.015em; transition: color 0.15s; }
-.linha-nome small { display: block; font-size: 1rem; font-weight: 400; letter-spacing: 0; color: var(--rio); margin-top: 0.2rem; }
+/* Faixa de cor que "varre" a linha da esquerda para a direita no hover */
+.linha summary::before {
+  content: ""; position: absolute; inset: 4px 0; z-index: -1; border-radius: 12px;
+  background: var(--acai-suave); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.45s var(--curva-suave);
+}
+.linha summary:hover::before, .linha[open] summary::before { transform: scaleX(1); }
+
+.linha-nome {
+  font-family: var(--fonte-titulo); font-size: 1.45rem; font-weight: 800; letter-spacing: -0.02em;
+  line-height: 1.15; transition: transform 0.45s var(--curva-suave);
+}
+.linha summary:hover .linha-nome { transform: translateX(6px); }
+.linha-nome small {
+  display: block; font-family: var(--fonte); font-size: 1rem; font-weight: 400;
+  letter-spacing: 0; color: var(--rio); margin-top: 0.3rem;
+}
 .linha-stack { font-family: var(--fonte-mono); font-size: 0.9rem; color: var(--rio); }
 
-/* Seta que gira quando a linha abre */
 .seta::before {
   content: ""; display: block; width: 9px; height: 9px;
   border-right: 2px solid var(--rio); border-bottom: 2px solid var(--rio);
-  transform: rotate(45deg); transition: transform 0.2s;
+  transform: rotate(45deg); transition: transform 0.35s var(--curva-suave);
 }
 .linha[open] .seta::before { transform: rotate(-135deg); }
 
-.linha-corpo { padding: 0 0 2rem; max-width: 900px; }
+.linha-corpo { padding: 0.5rem 1rem 2.25rem; max-width: 920px; }
+.linha[open] .linha-corpo { animation: entrar 0.5s var(--curva-suave); }
 
 /* =========================================================
    8. STACK, SOBRE, CONTATO, RODAPÉ
    ========================================================= */
 .stack { display: grid; grid-template-columns: 3fr 2fr; gap: clamp(2rem, 5vw, 4rem); }
-.stack h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+.stack h3 { font-size: 1.35rem; letter-spacing: -0.02em; margin-bottom: 1rem; }
 .stack-lista { list-style: none; margin: 0; padding: 0; }
 .stack-lista li {
   display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
-  padding: 0.85rem 0; border-bottom: 1px solid var(--margem);
+  padding: 0.9rem 0; border-bottom: 1px solid var(--margem);
+  transition: padding 0.35s var(--curva-suave);
 }
+.stack-lista li:hover { padding-left: 0.5rem; }
 .stack-lista code { font-weight: 500; }
+.stack-lista li:hover code { color: var(--acai); }
 .stack-lista span { color: var(--rio); text-align: right; }
 
-.sobre { max-width: 62ch; font-size: 1.2rem; }
+.sobre { max-width: 62ch; font-size: 1.25rem; line-height: 1.65; }
 .sobre p + p { margin-top: 1.25rem; }
-
-.contato-texto { color: var(--rio); font-size: 1.15rem; margin-bottom: 1rem; }
-.contato-email {
-  display: inline-block; font-size: clamp(1.8rem, 6vw, 4rem); font-weight: 800;
-  letter-spacing: -0.03em; overflow-wrap: anywhere; text-decoration-thickness: 2px;
+/* Primeira letra maior, como em livro */
+.sobre p:first-child::first-letter {
+  font-family: var(--fonte-titulo); font-weight: 800; color: var(--acai);
+  float: left; font-size: 3.6em; line-height: 0.85; margin: 0.08em 0.1em 0 0;
 }
-.contato-links { list-style: none; display: flex; gap: 2rem; margin: 2rem 0 0; padding: 0; }
-.contato-links a { font-weight: 600; padding: 0.5rem 0; display: inline-block; }
+
+.contato { overflow: hidden; }
+.ruas-contato { bottom: -45%; right: -10%; width: 70%; height: 170%; }
+.contato .wrap { position: relative; }
+.contato-texto { color: var(--rio); font-size: 1.2rem; margin-bottom: 1.25rem; }
+.contato-email {
+  display: inline-block; font-family: var(--fonte-titulo); font-size: clamp(2rem, 7vw, 4.75rem);
+  font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; overflow-wrap: anywhere;
+  background-size: 100% 3px; padding-bottom: 0.1em;
+}
+.contato-email:hover { background-size: 100% 6px; }
+.contato-links { list-style: none; display: flex; gap: 2rem; margin: 2.25rem 0 0; padding: 0; }
+.contato-links a { font-weight: 600; padding: 0.4rem 0; display: inline-block; }
 
 .rodape { padding: 2rem 0 3rem; border-top: 1px solid var(--margem); color: var(--rio); font-size: 0.9rem; }
+.rodape-interno { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.coordenadas { font-family: var(--fonte-mono); }
 
 /* =========================================================
    9. TELAS MENORES
    ========================================================= */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
+  .ruas-hero { width: 160%; right: -60%; }
   .stack { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
+  .topo ul { gap: 1rem; font-size: 0.95rem; }
   .indice-cabeca { display: none; }
-  .linha summary { grid-template-columns: minmax(0, 1fr) 1.5rem; gap: 0.5rem 1rem; }
-  .linha-nome { grid-column: 1; }
+  .linha summary { grid-template-columns: minmax(0, 1fr) 1.5rem; gap: 0.5rem 1rem; padding-inline: 0.75rem; }
   .linha-stack { grid-column: 1; grid-row: 2; }
   .linha summary .status { grid-column: 1; grid-row: 3; justify-self: start; }
   .seta { grid-column: 2; grid-row: 1; }
+  .linha-corpo { padding-inline: 0.75rem; }
   .mapa-leitura { grid-template-columns: 1fr 1fr; }
-  .mapa-leitura > div:last-child { grid-column: 1 / -1; }
+  .mapa-leitura > div:last-child { grid-column: 1 / -1; border-left: 0; padding-left: 0; }
+  .legenda { font-size: 0.7rem; gap: 0.6rem; }
 }
 
 /* Quem pede menos movimento no sistema não vê animações */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
+  .revelar { opacity: 1; transform: none; }
 }

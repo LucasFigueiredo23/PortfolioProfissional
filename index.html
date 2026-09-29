@@ -3,35 +3,53 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="light dark">
+  <meta name="color-scheme" content="dark light">
   <title>Lucas Figueiredo | Back-end, banco de dados e algoritmos</title>
   <meta name="description" content="Portfólio de Lucas Figueiredo, estudante de Engenharia de Software na UEPA, em Castanhal (PA). Back-end, banco de dados e algoritmos.">
 
-  <!-- Fontes: Schibsted Grotesk (texto e títulos) e JetBrains Mono (dados) -->
+  <!-- Fontes:
+       Bricolage Grotesque: títulos (tem personalidade nas letras grandes)
+       Schibsted Grotesk: texto corrido
+       JetBrains Mono: dados e código -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Aplica o tema salvo antes da página aparecer, para não "piscar"
+    try { const t = localStorage.getItem("tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
 </head>
 
 <body>
-  <!-- Atalho para quem navega pelo teclado -->
+  <!-- Traçado de ruas do fundo: definido UMA vez e reaproveitado com <use> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="ruas-simbolo" viewBox="0 0 800 600"><path class="rua" d="M0 20L800 15" stroke-width="1"/><path class="rua" d="M0 104L800 99" stroke-width="1"/><path class="rua" d="M0 162L800 132" stroke-width="1"/><path class="rua" d="M0 246L800 258" stroke-width="1"/><path class="rua" d="M0 304L800 265" stroke-width="1"/><path class="rua" d="M0 374L800 340" stroke-width="1"/><path class="rua" d="M0 420L800 429" stroke-width="1"/><path class="rua" d="M0 504L800 549" stroke-width="1"/><path class="rua" d="M0 562L800 574" stroke-width="1"/><path class="rua" d="M15 0L-11 600" stroke-width="1"/><path class="rua" d="M79 0L102 600" stroke-width="1"/><path class="rua" d="M131 0L148 600" stroke-width="1"/><path class="rua" d="M209 0L205 600" stroke-width="1"/><path class="rua" d="M273 0L274 600" stroke-width="1"/><path class="rua" d="M351 0L351 600" stroke-width="1"/><path class="rua" d="M403 0L400 600" stroke-width="1"/><path class="rua" d="M481 0L475 600" stroke-width="1"/><path class="rua" d="M533 0L545 600" stroke-width="1"/><path class="rua" d="M611 0L626 600" stroke-width="1"/><path class="rua" d="M689 0L661 600" stroke-width="1"/><path class="rua" d="M741 0L735 600" stroke-width="1"/><path class="rua" d="M-20 520L820 90" stroke-width="2.2"/><path class="rua" d="M120 -20L560 620" stroke-width="2.2"/><circle class="ponto-fundo" cx="210" cy="150" r="4"/><circle class="ponto-fundo" cx="470" cy="120" r="4"/><circle class="ponto-fundo" cx="640" cy="260" r="4"/><circle class="ponto-fundo" cx="330" cy="330" r="4"/><circle class="ponto-fundo" cx="560" cy="450" r="4"/><circle class="ponto-fundo" cx="150" cy="420" r="4"/><circle class="ponto-fundo" cx="720" cy="90" r="4"/></symbol></svg>
+
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
 
   <!-- =====================================================
-       MENU
+       MENU (fica grudado no topo ao rolar)
        ===================================================== -->
-  <header class="topo wrap">
-    <a class="marca" href="#conteudo">Lucas Figueiredo</a>
-    <nav aria-label="Principal">
-      <ul>
-        <li><a href="#projetos">Projetos</a></li>
-        <li><a href="#stack">Stack</a></li>
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#contato">Contato</a></li>
-      </ul>
-    </nav>
+  <header class="topo">
+    <div class="wrap topo-interno">
+      <a class="marca" href="#conteudo">
+        <span class="marca-ponto" aria-hidden="true"></span>Lucas Figueiredo
+      </a>
+      <nav aria-label="Principal">
+        <ul>
+          <li><a href="#projetos">Projetos</a></li>
+          <li><a href="#stack">Stack</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+        <!-- Botão de tema: alterna entre escuro (padrão) e claro -->
+        <button class="tema" id="tema" type="button" aria-label="Usar tema claro">
+          <svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+          <svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+        </button>
+      </nav>
+    </div>
   </header>
 
   <main id="conteudo">
@@ -39,48 +57,60 @@
     <!-- =====================================================
          HERO: apresentação + mapa de rotas interativo
          ===================================================== -->
-    <section class="hero wrap" aria-labelledby="titulo">
-      <div class="hero-texto">
-        <h1 id="titulo">Lucas Figueiredo</h1>
-        <p class="hero-sub">Estudante de Engenharia de Software na UEPA, em Castanhal (PA). Trabalho do lado de trás da tela: back-end, banco de dados e algoritmos.</p>
-        <p class="hero-busca">Procurando estágio em desenvolvimento.</p>
-        <div class="acoes">
-          <a class="btn btn-cheio" href="#projetos">Ver projetos</a>
-          <a class="btn btn-vazio" href="#contato">Falar comigo</a>
+    <section class="hero-fundo" aria-labelledby="titulo">
+      <svg class="ruas-fundo ruas-hero" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice"><use href="#ruas-simbolo"/></svg>
+
+      <div class="hero wrap">
+        <div class="hero-texto">
+          <p class="hero-local entrada" style="--atraso: 0">Castanhal, Pará</p>
+          <h1 id="titulo" class="entrada" style="--atraso: 1">Lucas<br>Figueiredo</h1>
+          <p class="hero-sub entrada" style="--atraso: 2">Estudante de Engenharia de Software na UEPA. Trabalho do lado de trás da tela: back-end, banco de dados e algoritmos.</p>
+          <p class="hero-busca entrada" style="--atraso: 3"><span class="pulso" aria-hidden="true"></span>Procurando estágio em desenvolvimento</p>
+          <div class="acoes entrada" style="--atraso: 4">
+            <a class="btn btn-cheio" href="#projetos">Ver projetos</a>
+            <a class="btn btn-vazio" href="#contato">Falar comigo</a>
+          </div>
         </div>
+
+        <figure class="mapa entrada" style="--atraso: 2">
+          <div class="mapa-quadro">
+            <svg id="mapa-svg" viewBox="0 0 600 420" role="img" aria-labelledby="mapa-titulo mapa-desc">
+              <title id="mapa-titulo">Simulação de rota de coleta</title>
+              <desc id="mapa-desc">Pontos de coleta sorteados, ligados primeiro por uma rota do vizinho mais próximo e depois por uma rota melhorada com o algoritmo 2-opt. Um caminhão percorre a rota final.</desc>
+              <defs>
+                <pattern id="ruas" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path class="grade" d="M40 0H0V40" fill="none"/>
+                </pattern>
+              </defs>
+              <rect width="600" height="420" fill="url(#ruas)"/>
+              <g id="camada-inicial"></g>
+              <g id="camada-otima"></g>
+              <g id="camada-pontos"></g>
+              <g id="camada-caminhao"></g>
+            </svg>
+
+            <ul class="legenda" aria-label="Legenda do mapa">
+              <li><span class="leg leg-inicial" aria-hidden="true"></span>Rota inicial</li>
+              <li><span class="leg leg-otima" aria-hidden="true"></span>Rota otimizada</li>
+              <li><span class="leg leg-garagem" aria-hidden="true"></span>Garagem</li>
+            </ul>
+          </div>
+
+          <div class="mapa-controles">
+            <label for="qtd">Pontos de coleta <output id="qtd-valor" for="qtd">16</output></label>
+            <input type="range" id="qtd" min="6" max="30" value="16">
+            <button id="novo" class="btn btn-vazio btn-pequeno" type="button">Sortear outro bairro</button>
+          </div>
+
+          <dl class="mapa-leitura" aria-live="polite">
+            <div><dt>Vizinho mais próximo</dt><dd id="d-inicial">–</dd></div>
+            <div><dt>Depois do 2-opt</dt><dd id="d-otima">–</dd></div>
+            <div><dt>Economia</dt><dd id="d-economia">–</dd></div>
+          </dl>
+
+          <figcaption>Simulação com pontos sorteados, rodando no seu navegador. É o tipo de problema que estou atacando no <a href="#coleta">projeto de coleta de lixo de Castanhal</a>.</figcaption>
+        </figure>
       </div>
-
-      <figure class="mapa">
-        <div class="mapa-quadro">
-          <svg id="mapa-svg" viewBox="0 0 600 420" role="img" aria-labelledby="mapa-titulo mapa-desc">
-            <title id="mapa-titulo">Simulação de rota de coleta</title>
-            <desc id="mapa-desc">Pontos de coleta sorteados, ligados primeiro por uma rota do vizinho mais próximo e depois por uma rota melhorada com o algoritmo 2-opt.</desc>
-            <defs>
-              <pattern id="ruas" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path class="grade" d="M40 0H0V40" fill="none"/>
-              </pattern>
-            </defs>
-            <rect width="600" height="420" fill="url(#ruas)"/>
-            <g id="camada-inicial"></g>
-            <g id="camada-otima"></g>
-            <g id="camada-pontos"></g>
-          </svg>
-        </div>
-
-        <div class="mapa-controles">
-          <label for="qtd">Pontos de coleta: <output id="qtd-valor" for="qtd">16</output></label>
-          <input type="range" id="qtd" min="6" max="30" value="16">
-          <button id="novo" class="btn btn-vazio btn-pequeno" type="button">Sortear outro bairro</button>
-        </div>
-
-        <dl class="mapa-leitura" aria-live="polite">
-          <div><dt>Vizinho mais próximo</dt><dd id="d-inicial">–</dd></div>
-          <div><dt>Depois do 2-opt</dt><dd id="d-otima">–</dd></div>
-          <div><dt>Economia</dt><dd id="d-economia">–</dd></div>
-        </dl>
-
-        <figcaption>Simulação com pontos sorteados, rodando no seu navegador. É o tipo de problema que estou atacando no <a href="#coleta">projeto de coleta de lixo de Castanhal</a>.</figcaption>
-      </figure>
     </section>
 
     <!-- =====================================================
@@ -92,8 +122,10 @@
 
         <!-- Projeto principal, em formato de estudo de caso -->
         <article class="destaque" id="coleta">
+          <svg class="ruas-fundo ruas-destaque" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice"><use href="#ruas-simbolo"/></svg>
+
           <div class="destaque-cabeca">
-            <p class="status andamento">Em andamento</p>
+            <p class="status andamento"><span class="pulso" aria-hidden="true"></span>Em andamento</p>
             <h3>Rotas de coleta de lixo em Castanhal</h3>
             <p class="resumo">Rotas dinâmicas para os caminhões de coleta da cidade, calculadas a partir de dados geográficos e do volume histórico de lixo de cada região.</p>
           </div>
@@ -120,7 +152,7 @@
             <summary>
               <span class="linha-nome">Letivo <small>Horários escolares com grade mensal colorida</small></span>
               <span class="linha-stack">PHP, Twig</span>
-              <span class="status andamento">Em andamento</span>
+              <span class="status andamento"><span class="pulso" aria-hidden="true"></span>Em andamento</span>
               <span class="seta" aria-hidden="true"></span>
             </summary>
             <div class="linha-corpo">
@@ -249,11 +281,12 @@
     <!-- =====================================================
          CONTATO
          ===================================================== -->
-    <section id="contato" class="secao" aria-labelledby="t-contato">
+    <section id="contato" class="secao contato" aria-labelledby="t-contato">
+      <svg class="ruas-fundo ruas-contato" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice"><use href="#ruas-simbolo"/></svg>
       <div class="wrap">
         <h2 id="t-contato">Contato</h2>
-        <p class="contato-texto">Tem uma vaga de estágio, trabalho ou quer conversar sobre algum projeto? Me escreve.</p>
-        <a class="contato-email" href="mailto:seuemail@exemplo.com">lucasfigueiredo.bsilva@gmail.com</a>
+        <p class="contato-texto">Tem uma vaga de estágio ou quer conversar sobre algum projeto? Me escreve.</p>
+        <a class="contato-email" href="mailto:seuemail@exemplo.com">[SEU E-MAIL]</a>
         <ul class="contato-links">
           <li><a href="#">GitHub</a></li>
           <li><a href="#">LinkedIn</a></li>
@@ -263,7 +296,10 @@
   </main>
 
   <footer class="rodape">
-    <div class="wrap">Feito à mão em Castanhal, Pará.</div>
+    <div class="wrap rodape-interno">
+      <span>Feito à mão em Castanhal, Pará.</span>
+      <span class="coordenadas">1°17′S 47°55′W</span>
+    </div>
   </footer>
 
   <script src="script.js"></script>
