@@ -1,0 +1,265 @@
+/* =========================================================
+   1. TOKENS: cores, fontes e espaçamentos
+   Mude aqui e o site inteiro acompanha.
+   ========================================================= */
+:root {
+  --varzea: #EEF0EA;        /* fundo */
+  --superficie: #F8F9F6;    /* blocos em destaque */
+  --igarape: #122A30;       /* texto principal */
+  --rio: #4A6168;           /* texto secundário */
+  --margem: #CBD3CE;        /* linhas */
+  --grade: #DEE3DF;         /* grade de ruas do mapa */
+  --acai: #4B1F5C;          /* destaque principal */
+  --acai-suave: #E9E1EC;
+  --tucupi-texto: #875800;  /* status "em andamento" (texto) */
+  --tucupi-linha: #B57A0C;  /* rota otimizada (gráfico) */
+
+  --fonte: "Schibsted Grotesk", "Segoe UI", system-ui, sans-serif;
+  --fonte-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+
+  --raio: 18px;
+  --largura: 1180px;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Modo escuro automático (segue o sistema) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --varzea: #0E1B1F; --superficie: #15262B; --igarape: #E4EBE8; --rio: #9EB1B3;
+    --margem: #2A3D42; --grade: #1B2C31; --acai: #C9A3DC; --acai-suave: #251D2B;
+    --tucupi-texto: #E8B04A; --tucupi-linha: #E8B04A;
+  }
+}
+/* Modo escuro forçado (usado por alguns visualizadores) */
+:root[data-theme="dark"] {
+  --varzea: #0E1B1F; --superficie: #15262B; --igarape: #E4EBE8; --rio: #9EB1B3;
+  --margem: #2A3D42; --grade: #1B2C31; --acai: #C9A3DC; --acai-suave: #251D2B;
+  --tucupi-texto: #E8B04A; --tucupi-linha: #E8B04A;
+}
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
+*, *::before, *::after { box-sizing: inherit; }
+
+html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+body {
+  margin: 0;
+  background: var(--varzea);
+  color: var(--igarape);
+  font-family: var(--fonte);
+  font-size: 1.0625rem;   /* 17px */
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.05; font-weight: 800; letter-spacing: -0.025em; }
+p { margin: 0; }
+img, svg { max-width: 100%; }
+code { font-family: var(--fonte-mono); font-size: 0.92em; }
+
+a { color: var(--acai); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible { outline: 3px solid var(--acai); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: var(--largura); margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+
+/* Link "Pular para o conteúdo": só aparece ao receber foco */
+.pular {
+  position: absolute; left: 1rem; top: -4rem; z-index: 10;
+  background: var(--acai); color: var(--varzea); padding: 0.75rem 1rem; border-radius: 8px;
+}
+.pular:focus { top: 1rem; }
+
+/* =========================================================
+   3. MENU
+   ========================================================= */
+.topo {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; flex-wrap: wrap; padding-top: 1.5rem; padding-bottom: 1.5rem;
+}
+.marca { font-weight: 800; color: var(--igarape); text-decoration: none; font-size: 1.1rem; }
+.topo ul { list-style: none; display: flex; gap: clamp(1rem, 3vw, 2rem); margin: 0; padding: 0; flex-wrap: wrap; }
+.topo ul a { color: var(--rio); text-decoration: none; font-weight: 500; padding: 0.5rem 0; }
+.topo ul a:hover { color: var(--igarape); }
+
+/* =========================================================
+   4. BOTÕES
+   ========================================================= */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0 1.5rem; border-radius: 999px;
+  font: inherit; font-weight: 600; text-decoration: none; cursor: pointer;
+  border: 2px solid var(--acai); transition: background-color 0.15s, color 0.15s;
+}
+.btn-cheio { background: var(--acai); color: var(--varzea); }
+.btn-cheio:hover { background: transparent; color: var(--acai); }
+.btn-vazio { background: transparent; color: var(--acai); }
+.btn-vazio:hover { background: var(--acai); color: var(--varzea); }
+.btn-pequeno { min-height: 44px; padding: 0 1.1rem; font-size: 0.95rem; }
+
+/* =========================================================
+   5. HERO
+   ========================================================= */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(2rem, 5vw, 4.5rem); align-items: center;
+  padding-top: clamp(2rem, 6vw, 5rem); padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+.hero h1 { font-size: clamp(3rem, 7.5vw, 6rem); }
+.hero-sub { font-size: clamp(1.15rem, 1.8vw, 1.3rem); color: var(--rio); max-width: 32ch; margin-top: 1.5rem; }
+.hero-busca { font-weight: 600; margin: 1.25rem 0 2rem; }
+.acoes { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+/* ---------- Mapa de rotas ---------- */
+.mapa { margin: 0; }
+.mapa-quadro {
+  background: var(--superficie); border: 1px solid var(--margem);
+  border-radius: var(--raio); overflow: hidden;
+}
+.mapa-quadro svg { display: block; width: 100%; height: auto; }
+.grade { stroke: var(--grade); stroke-width: 1; }
+
+.rota-inicial {
+  fill: none; stroke: var(--rio); stroke-width: 1.5;
+  stroke-dasharray: 3 6; opacity: 0.55;
+}
+.rota-otima {
+  fill: none; stroke: var(--tucupi-linha); stroke-width: 3.5;
+  stroke-linejoin: round; stroke-linecap: round;
+}
+.ponto { fill: var(--igarape); }
+.deposito { fill: var(--acai); }
+.rotulo { fill: var(--rio); font-family: var(--fonte-mono); font-size: 13px; }
+
+.mapa-controles {
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;
+}
+.mapa-controles label { font-weight: 500; }
+.mapa-controles output { font-family: var(--fonte-mono); }
+.mapa-controles input[type="range"] { flex: 1 1 140px; accent-color: var(--acai); min-height: 44px; }
+
+.mapa-leitura {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  margin: 1.25rem 0 0; padding: 1rem 0; border-top: 1px solid var(--margem); border-bottom: 1px solid var(--margem);
+}
+.mapa-leitura dt { font-size: 0.85rem; color: var(--rio); }
+.mapa-leitura dd { margin: 0.2rem 0 0; font-family: var(--fonte-mono); font-size: 1.15rem; font-weight: 500; }
+#d-economia { color: var(--tucupi-texto); }
+
+.mapa figcaption { margin-top: 1rem; font-size: 0.95rem; color: var(--rio); max-width: 60ch; }
+
+/* =========================================================
+   6. SEÇÕES (estrutura comum)
+   ========================================================= */
+.secao { padding: clamp(4rem, 8vw, 6.5rem) 0; border-top: 1px solid var(--margem); }
+.secao h2 { font-size: clamp(2.2rem, 5vw, 3.25rem); margin-bottom: clamp(2rem, 4vw, 3rem); }
+
+/* Status: "em andamento" / "concluído" */
+.status {
+  display: inline-block; font-size: 0.85rem; font-weight: 600; white-space: nowrap;
+  padding: 0.15rem 0.7rem; border-radius: 999px; border: 1.5px solid currentColor;
+}
+.status.andamento { color: var(--tucupi-texto); }
+.status.concluido { color: var(--rio); }
+
+/* Lista de definições usada nos estudos de caso */
+.caso { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem 2.5rem; margin: 0; }
+.caso dt { font-weight: 600; margin-bottom: 0.3rem; }
+.caso dd { margin: 0; color: var(--rio); }
+
+.link-forte { display: inline-block; margin-top: 1.75rem; font-weight: 600; padding: 0.4rem 0; }
+
+/* =========================================================
+   7. PROJETOS
+   ========================================================= */
+.destaque {
+  background: var(--acai-suave); border-radius: var(--raio);
+  padding: clamp(1.75rem, 4vw, 3rem); margin-bottom: clamp(3rem, 6vw, 4.5rem);
+}
+.destaque-cabeca { max-width: 62ch; margin-bottom: 2.25rem; }
+.destaque h3 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); margin: 1rem 0 1rem; }
+.destaque .resumo { font-size: 1.15rem; }
+.destaque .caso dd { color: var(--igarape); }
+
+/* Índice de projetos: colunas iguais no cabeçalho e nas linhas */
+.indice-cabeca, .linha summary {
+  display: grid; grid-template-columns: minmax(0, 1fr) 12rem 9rem 1.5rem;
+  gap: 1.5rem; align-items: center;
+}
+.indice-cabeca { font-size: 0.85rem; color: var(--rio); padding-bottom: 0.75rem; }
+
+.linha { border-top: 1px solid var(--margem); }
+.linha:last-child { border-bottom: 1px solid var(--margem); }
+.linha summary { list-style: none; cursor: pointer; padding: 1.4rem 0; }
+.linha summary::-webkit-details-marker { display: none; }
+.linha summary:hover .linha-nome { color: var(--acai); }
+
+.linha-nome { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.015em; transition: color 0.15s; }
+.linha-nome small { display: block; font-size: 1rem; font-weight: 400; letter-spacing: 0; color: var(--rio); margin-top: 0.2rem; }
+.linha-stack { font-family: var(--fonte-mono); font-size: 0.9rem; color: var(--rio); }
+
+/* Seta que gira quando a linha abre */
+.seta::before {
+  content: ""; display: block; width: 9px; height: 9px;
+  border-right: 2px solid var(--rio); border-bottom: 2px solid var(--rio);
+  transform: rotate(45deg); transition: transform 0.2s;
+}
+.linha[open] .seta::before { transform: rotate(-135deg); }
+
+.linha-corpo { padding: 0 0 2rem; max-width: 900px; }
+
+/* =========================================================
+   8. STACK, SOBRE, CONTATO, RODAPÉ
+   ========================================================= */
+.stack { display: grid; grid-template-columns: 3fr 2fr; gap: clamp(2rem, 5vw, 4rem); }
+.stack h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+.stack-lista { list-style: none; margin: 0; padding: 0; }
+.stack-lista li {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+  padding: 0.85rem 0; border-bottom: 1px solid var(--margem);
+}
+.stack-lista code { font-weight: 500; }
+.stack-lista span { color: var(--rio); text-align: right; }
+
+.sobre { max-width: 62ch; font-size: 1.2rem; }
+.sobre p + p { margin-top: 1.25rem; }
+
+.contato-texto { color: var(--rio); font-size: 1.15rem; margin-bottom: 1rem; }
+.contato-email {
+  display: inline-block; font-size: clamp(1.8rem, 6vw, 4rem); font-weight: 800;
+  letter-spacing: -0.03em; overflow-wrap: anywhere; text-decoration-thickness: 2px;
+}
+.contato-links { list-style: none; display: flex; gap: 2rem; margin: 2rem 0 0; padding: 0; }
+.contato-links a { font-weight: 600; padding: 0.5rem 0; display: inline-block; }
+
+.rodape { padding: 2rem 0 3rem; border-top: 1px solid var(--margem); color: var(--rio); font-size: 0.9rem; }
+
+/* =========================================================
+   9. TELAS MENORES
+   ========================================================= */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .stack { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .indice-cabeca { display: none; }
+  .linha summary { grid-template-columns: minmax(0, 1fr) 1.5rem; gap: 0.5rem 1rem; }
+  .linha-nome { grid-column: 1; }
+  .linha-stack { grid-column: 1; grid-row: 2; }
+  .linha summary .status { grid-column: 1; grid-row: 3; justify-self: start; }
+  .seta { grid-column: 2; grid-row: 1; }
+  .mapa-leitura { grid-template-columns: 1fr 1fr; }
+  .mapa-leitura > div:last-child { grid-column: 1 / -1; }
+}
+
+/* Quem pede menos movimento no sistema não vê animações */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

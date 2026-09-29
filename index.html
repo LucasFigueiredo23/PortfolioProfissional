@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Lucas Figueiredo | Back-end, banco de dados e algoritmos</title>
+  <meta name="description" content="Portfólio de Lucas Figueiredo, estudante de Engenharia de Software na UEPA, em Castanhal (PA). Back-end, banco de dados e algoritmos.">
+
+  <!-- Fontes: Schibsted Grotesk (texto e títulos) e JetBrains Mono (dados) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Atalho para quem navega pelo teclado -->
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- =====================================================
+       MENU
+       ===================================================== -->
+  <header class="topo wrap">
+    <a class="marca" href="#conteudo">Lucas Figueiredo</a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- =====================================================
+         HERO: apresentação + mapa de rotas interativo
+         ===================================================== -->
+    <section class="hero wrap" aria-labelledby="titulo">
+      <div class="hero-texto">
+        <h1 id="titulo">Lucas Figueiredo</h1>
+        <p class="hero-sub">Estudante de Engenharia de Software na UEPA, em Castanhal (PA). Trabalho do lado de trás da tela: back-end, banco de dados e algoritmos.</p>
+        <p class="hero-busca">Procurando estágio em desenvolvimento.</p>
+        <div class="acoes">
+          <a class="btn btn-cheio" href="#projetos">Ver projetos</a>
+          <a class="btn btn-vazio" href="#contato">Falar comigo</a>
+        </div>
+      </div>
+
+      <figure class="mapa">
+        <div class="mapa-quadro">
+          <svg id="mapa-svg" viewBox="0 0 600 420" role="img" aria-labelledby="mapa-titulo mapa-desc">
+            <title id="mapa-titulo">Simulação de rota de coleta</title>
+            <desc id="mapa-desc">Pontos de coleta sorteados, ligados primeiro por uma rota do vizinho mais próximo e depois por uma rota melhorada com o algoritmo 2-opt.</desc>
+            <defs>
+              <pattern id="ruas" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path class="grade" d="M40 0H0V40" fill="none"/>
+              </pattern>
+            </defs>
+            <rect width="600" height="420" fill="url(#ruas)"/>
+            <g id="camada-inicial"></g>
+            <g id="camada-otima"></g>
+            <g id="camada-pontos"></g>
+          </svg>
+        </div>
+
+        <div class="mapa-controles">
+          <label for="qtd">Pontos de coleta: <output id="qtd-valor" for="qtd">16</output></label>
+          <input type="range" id="qtd" min="6" max="30" value="16">
+          <button id="novo" class="btn btn-vazio btn-pequeno" type="button">Sortear outro bairro</button>
+        </div>
+
+        <dl class="mapa-leitura" aria-live="polite">
+          <div><dt>Vizinho mais próximo</dt><dd id="d-inicial">–</dd></div>
+          <div><dt>Depois do 2-opt</dt><dd id="d-otima">–</dd></div>
+          <div><dt>Economia</dt><dd id="d-economia">–</dd></div>
+        </dl>
+
+        <figcaption>Simulação com pontos sorteados, rodando no seu navegador. É o tipo de problema que estou atacando no <a href="#coleta">projeto de coleta de lixo de Castanhal</a>.</figcaption>
+      </figure>
+    </section>
+
+    <!-- =====================================================
+         PROJETOS
+         ===================================================== -->
+    <section id="projetos" class="secao" aria-labelledby="t-projetos">
+      <div class="wrap">
+        <h2 id="t-projetos">Projetos</h2>
+
+        <!-- Projeto principal, em formato de estudo de caso -->
+        <article class="destaque" id="coleta">
+          <div class="destaque-cabeca">
+            <p class="status andamento">Em andamento</p>
+            <h3>Rotas de coleta de lixo em Castanhal</h3>
+            <p class="resumo">Rotas dinâmicas para os caminhões de coleta da cidade, calculadas a partir de dados geográficos e do volume histórico de lixo de cada região.</p>
+          </div>
+
+          <dl class="caso">
+            <div><dt>Objetivo</dt><dd>Reduzir o combustível gasto pelos caminhões de coleta.</dd></div>
+            <div><dt>Abordagem</dt><dd>Otimização de rotas com dados geográficos e histórico de volume por região.</dd></div>
+            <div><dt>Onde vai ser apresentado</dt><dd>14ª Semana Acadêmica do Campus XX da UEPA, em novembro de 2026.</dd></div>
+            <div><dt>Stack</dt><dd>[PREENCHER]</dd></div>
+            <div><dt>Parte mais difícil</dt><dd>[PREENCHER]</dd></div>
+            <div><dt>O que estou aprendendo</dt><dd>[PREENCHER]</dd></div>
+          </dl>
+
+          <a class="link-forte" href="#">Repositório [PREENCHER]</a>
+        </article>
+
+        <!-- Demais projetos: cada linha abre com mais detalhes -->
+        <div class="indice">
+          <div class="indice-cabeca" aria-hidden="true">
+            <span>Projeto</span><span>Stack</span><span>Status</span><span></span>
+          </div>
+
+          <details class="linha">
+            <summary>
+              <span class="linha-nome">Letivo <small>Horários escolares com grade mensal colorida</small></span>
+              <span class="linha-stack">PHP, Twig</span>
+              <span class="status andamento">Em andamento</span>
+              <span class="seta" aria-hidden="true"></span>
+            </summary>
+            <div class="linha-corpo">
+              <dl class="caso">
+                <div><dt>Problema</dt><dd>Centralizar os horários de aula da minha turma. A versão 1.0 vai ser usada pela própria turma da faculdade.</dd></div>
+                <div><dt>O que fiz</dt><dd>Toda a programação, numa equipe de três. Comecei em Python com Flask e reconstruí em PHP com Twig, parte por parte. O front-end foi pensado para acessibilidade, e a grade mensal mostra pela cor se cada dia tem aula.</dd></div>
+                <div><dt>Parte mais difícil</dt><dd>[PREENCHER]</dd></div>
+                <div><dt>O que aprendi</dt><dd>[PREENCHER]</dd></div>
+              </dl>
+              <a class="link-forte" href="#">Ver código</a>
+            </div>
+          </details>
+
+          <details class="linha">
+            <summary>
+              <span class="linha-nome">Banco de dados de biblioteca <small>Modelagem completa em MySQL</small></span>
+              <span class="linha-stack">MySQL, SQL</span>
+              <span class="status concluido">Concluído</span>
+              <span class="seta" aria-hidden="true"></span>
+            </summary>
+            <div class="linha-corpo">
+              <dl class="caso">
+                <div><dt>O que fiz</dt><dd>Schema completo de uma biblioteca, diagrama entidade-relacionamento, consultas e views. Projeto em dupla da disciplina de Banco de Dados.</dd></div>
+                <div><dt>Parte mais difícil</dt><dd>[PREENCHER]</dd></div>
+                <div><dt>O que aprendi</dt><dd>[PREENCHER]</dd></div>
+              </dl>
+              <a class="link-forte" href="#">Ver código</a>
+            </div>
+          </details>
+
+          <details class="linha">
+            <summary>
+              <span class="linha-nome">Gestão de produtos <small>Cadastro e controle de produtos na web</small></span>
+              <span class="linha-stack">Kotlin, Spring Boot</span>
+              <span class="status concluido">Concluído</span>
+              <span class="seta" aria-hidden="true"></span>
+            </summary>
+            <div class="linha-corpo">
+              <dl class="caso">
+                <div><dt>O que fiz</dt><dd>Aplicação web em Kotlin com Spring Boot, com páginas renderizadas no servidor usando Thymeleaf.</dd></div>
+                <div><dt>Parte mais difícil</dt><dd>[PREENCHER]</dd></div>
+                <div><dt>O que aprendi</dt><dd>[PREENCHER]</dd></div>
+              </dl>
+              <a class="link-forte" href="#">Ver código</a>
+            </div>
+          </details>
+
+          <details class="linha">
+            <summary>
+              <span class="linha-nome">Labirinto animado <small>Backtracking visualizado passo a passo</small></span>
+              <span class="linha-stack">[PREENCHER]</span>
+              <span class="status concluido">Concluído</span>
+              <span class="seta" aria-hidden="true"></span>
+            </summary>
+            <div class="linha-corpo">
+              <dl class="caso">
+                <div><dt>O que fiz</dt><dd>Animação de um algoritmo resolvendo labirintos com backtracking, feita para a disciplina de Análise de Algoritmos.</dd></div>
+                <div><dt>Parte mais difícil</dt><dd>[PREENCHER]</dd></div>
+                <div><dt>O que aprendi</dt><dd>[PREENCHER]</dd></div>
+              </dl>
+              <a class="link-forte" href="#">Ver código</a>
+            </div>
+          </details>
+
+          <details class="linha">
+            <summary>
+              <span class="linha-nome">menugames <small>Jogos em C para o terminal</small></span>
+              <span class="linha-stack">C</span>
+              <span class="status concluido">Concluído</span>
+              <span class="seta" aria-hidden="true"></span>
+            </summary>
+            <div class="linha-corpo">
+              <dl class="caso">
+                <div><dt>O que fiz</dt><dd>Uma coleção de jogos em C. Foi meu primeiro projeto publicado no GitHub e onde aprendi o fluxo completo do Git.</dd></div>
+                <div><dt>O que aprendi</dt><dd>[PREENCHER]</dd></div>
+              </dl>
+              <a class="link-forte" href="#">Ver código</a>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         STACK
+         ===================================================== -->
+    <section id="stack" class="secao" aria-labelledby="t-stack">
+      <div class="wrap">
+        <h2 id="t-stack">Stack</h2>
+        <div class="stack">
+          <div>
+            <h3>Uso no dia a dia</h3>
+            <ul class="stack-lista">
+              <li><code>Python</code><span>lógica, scripts, a base de tudo</span></li>
+              <li><code>SQL / MySQL</code><span>modelagem, consultas e views</span></li>
+              <li><code>Git</code><span>versionamento e GitHub</span></li>
+              <li><code>PHP</code><span>back-end web com Twig</span></li>
+              <li><code>Kotlin</code><span>Spring Boot e Exposed</span></li>
+              <li><code>C</code><span>minha primeira linguagem</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Estudando agora</h3>
+            <ul class="stack-lista">
+              <li><code>FastAPI</code><span>APIs em Python</span></li>
+              <li><code>Django</code><span>aplicações web em Python</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SOBRE
+         ===================================================== -->
+    <section id="sobre" class="secao" aria-labelledby="t-sobre">
+      <div class="wrap">
+        <h2 id="t-sobre">Sobre</h2>
+        <div class="sobre">
+          <p>Comecei programando em C e hoje estudo Engenharia de Software na Universidade do Estado do Pará, no campus de Castanhal. O que mais me prende é o back-end: como os dados se organizam, como as regras funcionam e como deixar tudo sólido.</p>
+          <p>Prefiro projetos que resolvem problemas reais da cidade onde moro, como a coleta de lixo. [PREENCHER: uma ou duas frases sobre como você é, com exemplos concretos.]</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         CONTATO
+         ===================================================== -->
+    <section id="contato" class="secao" aria-labelledby="t-contato">
+      <div class="wrap">
+        <h2 id="t-contato">Contato</h2>
+        <p class="contato-texto">Tem uma vaga de estágio, trabalho ou quer conversar sobre algum projeto? Me escreve.</p>
+        <a class="contato-email" href="mailto:seuemail@exemplo.com">lucasfigueiredo.bsilva@gmail.com</a>
+        <ul class="contato-links">
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="wrap">Feito à mão em Castanhal, Pará.</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
